@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MessageCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="messagecollection.xsd">
+
+    <Plugin>
+        <ShortDescription>Palantir Antipatterns Plugin</ShortDescription>
+        <Details>Detects some common antipatterns.</Details>
+    </Plugin>
+
+    <Detector class="com.palantir.antipatterns.ConcreteTypeSubclassDetector">
+        <Details>
+            This detector finds types that subclass concrete (i.e. non-abstract) types.
+        </Details>
+
+    </Detector>
+
+    <BugPattern type="PT_EXTENDED_CONCRETE_TYPE">
+        <ShortDescription>Concrete type subclassed</ShortDescription>
+        <LongDescription>{1} erroneously subclasses concrete type {2}</LongDescription>
+        <Details>
+<![CDATA[
+  <p> Subclassing concrete types is fragile. Extract a common abstract superclass or interface, or
+  use a proxy to implement the delegation pattern. See also
+  <a href="https://codingantihero.wordpress.com/2016/02/08/antipattern-final-classes/"
+  >Antipattern: Final classes</a> </p>
+]]>
+        </Details>
+    </BugPattern>
+</MessageCollection>
+
+
+
