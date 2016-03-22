@@ -9,7 +9,8 @@
 
     <Detector class="com.palantir.antipatterns.ExtendsConcreteTypeDetector">
         <Details>
-            This detector finds types that extend concrete (i.e. non-abstract) types.
+            This detector finds types that extend concrete (i.e. non-abstract) types, as well as
+            types unnecessarily declared as final (which breaks Mockito).
         </Details>
     </Detector>
 
@@ -27,4 +28,20 @@
     </BugPattern>
 
     <BugCode abbrev="PTXCT">Extends concrete type</BugCode>
+
+    <BugPattern type="PT_FINAL_TYPE">
+        <ShortDescription>Class declared final</ShortDescription>
+        <LongDescription>{0} is declared final</LongDescription>
+        <Details>
+<![CDATA[
+  <p> Marking types as final breaks proxying utilities like
+  <a href="http://mockito.org/">Mockito</a>. Prefer hidden constructors and static factory
+  methods&mdash;or just trust your users not to do anything stupid. See also
+  <a href="https://codingantihero.wordpress.com/2016/02/08/antipattern-final-classes/"
+  >Antipattern: Final classes</a> </p>
+]]>
+        </Details>
+    </BugPattern>
+
+    <BugCode abbrev="PTF">Class declared final</BugCode>
 </MessageCollection>
