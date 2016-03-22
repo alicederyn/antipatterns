@@ -26,3 +26,7 @@ dependencies {
   testCompile 'com.google.truth:truth:0.28'
 }
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.12'
+}
+
