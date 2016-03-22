@@ -15,7 +15,7 @@
 
     <BugPattern type="PT_EXTENDS_CONCRETE_TYPE">
         <ShortDescription>Extends concrete type</ShortDescription>
-        <LongDescription>{1} extends concrete type {2}</LongDescription>
+        <LongDescription>{0} extends concrete type {1}</LongDescription>
         <Details>
 <![CDATA[
   <p> Subclassing concrete types is fragile. Extract a common abstract superclass or interface, or
@@ -25,7 +25,6 @@
 ]]>
         </Details>
     </BugPattern>
+
+    <BugCode abbrev="PTXCT">Extends concrete type</BugCode>
 </MessageCollection>
-
-
-
