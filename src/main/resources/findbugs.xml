@@ -1,5 +1,6 @@
 <FindbugsPlugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="findbugsplugin.xsd" pluginid="palantir.antipatterns.detector"
     defaultenabled="true" provider="Palantir Antipatterns Detector" website="https://github.com/palantir/antipatterns">
-    <Detector class="ConcreteTypeSubclassDetector" speed="fast" disabled="false" reports="TESTING" />
+    <Detector class="com.palantir.antipatterns.ExtendsConcreteTypeDetector"
+        speed="fast" disabled="false" reports="PT_EXTENDS_CONCRETE_TYPE" />
 </FindbugsPlugin>

@@ -7,22 +7,22 @@ import java.util.Set;
 
 import edu.umd.cs.findbugs.BugInstance;
 import edu.umd.cs.findbugs.BugReporter;
+import edu.umd.cs.findbugs.Detector;
+import edu.umd.cs.findbugs.ba.ClassContext;
 import edu.umd.cs.findbugs.bcel.BCELUtil;
-import edu.umd.cs.findbugs.bcel.PreorderDetector;
 
-public class ConcreteTypeSubclassDetector extends PreorderDetector {
-
-    public static final String EXTENDED_CONCRETE_TYPE_BUG = "PT_EXTENDED_CONCRETE_TYPE";
+public class ExtendsConcreteTypeDetector implements Detector {
 
     private final BugReporter bugReporter;
     private final Set<String> visited = new LinkedHashSet<>();
 
-    public ConcreteTypeSubclassDetector(BugReporter bugReporter) {
+    public ExtendsConcreteTypeDetector(BugReporter bugReporter) {
         this.bugReporter = bugReporter;
     }
 
     @Override
-    public void visitJavaClass(JavaClass obj) {
+    public void visitClassContext(ClassContext classContext) {
+        JavaClass obj = classContext.getJavaClass();
         if (BCELUtil.isSynthetic(obj)) {
             return;
         }
@@ -37,15 +37,18 @@ public class ConcreteTypeSubclassDetector extends PreorderDetector {
             return;
         }
         try {
-            if (!obj.getSuperClass().isAbstract()) {
+            if (obj.getSuperClass().isAbstract()) {
                 return;
             }
         } catch (ClassNotFoundException e) {
             // Ignore
             return;
         }
-        bugReporter.reportBug(new BugInstance(this, EXTENDED_CONCRETE_TYPE_BUG, HIGH_PRIORITY)
+        bugReporter.reportBug(new BugInstance(this, "PT_EXTENDS_CONCRETE_TYPE", HIGH_PRIORITY)
                 .addClass(name)
                 .addClass(obj.getSuperclassName()));
     }
+
+    @Override
+    public void report() {}
 }

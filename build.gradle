@@ -15,6 +15,7 @@ repositories {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply plugin: 'findbugs'
 
 sourceCompatibility = '1.7'
 targetCompatibility = '1.7'
@@ -29,4 +30,37 @@ dependencies {
 task wrapper(type: Wrapper) {
     gradleVersion = '2.12'
 }
+
+//// Integration test with FindBugs ////////////////////////////////////////////
+sourceSets {
+    integrationTest {
+        java {
+            srcDir 'src/integration/java'
+        }
+        resources {
+            srcDir 'src/integration/resources'
+        }
+    }
+}
+
+task integrationTest(type: FindBugs) {
+  pluginClasspath = jar.outputs.files
+  classes = fileTree(project.sourceSets.integrationTest.output.classesDir)
+  source = project.sourceSets.integrationTest.java.srcDirs
+  classpath = files()
+  //visitors = ['ExtendsConcreteTypeDetector']
+  reports {
+    xml.enabled = false
+    html {
+      enabled = true
+      destination 'build/findbugs.html'
+    }
+  }
+}
+
+
+integrationTest.dependsOn jar
+integrationTest.dependsOn integrationTestClasses
+integrationTest.shouldRunAfter test
+check.dependsOn integrationTest
 

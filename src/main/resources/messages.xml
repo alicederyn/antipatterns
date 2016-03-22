@@ -7,16 +7,15 @@
         <Details>Detects some common antipatterns.</Details>
     </Plugin>
 
-    <Detector class="com.palantir.antipatterns.ConcreteTypeSubclassDetector">
+    <Detector class="com.palantir.antipatterns.ExtendsConcreteTypeDetector">
         <Details>
-            This detector finds types that subclass concrete (i.e. non-abstract) types.
+            This detector finds types that extend concrete (i.e. non-abstract) types.
         </Details>
-
     </Detector>
 
-    <BugPattern type="PT_EXTENDED_CONCRETE_TYPE">
-        <ShortDescription>Concrete type subclassed</ShortDescription>
-        <LongDescription>{1} erroneously subclasses concrete type {2}</LongDescription>
+    <BugPattern type="PT_EXTENDS_CONCRETE_TYPE">
+        <ShortDescription>Extends concrete type</ShortDescription>
+        <LongDescription>{1} extends concrete type {2}</LongDescription>
         <Details>
 <![CDATA[
   <p> Subclassing concrete types is fragile. Extract a common abstract superclass or interface, or
