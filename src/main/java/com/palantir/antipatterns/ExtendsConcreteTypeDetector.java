@@ -34,10 +34,13 @@ public class ExtendsConcreteTypeDetector implements Detector {
             return;
         }
         if ("java.lang.Object".equals(obj.getSuperclassName())) {
+            // TODO Test this
             return;
         }
+        // TODO Exceptions
         try {
             if (obj.getSuperClass().isAbstract()) {
+                // TODO Test this
                 return;
             }
         } catch (ClassNotFoundException e) {
