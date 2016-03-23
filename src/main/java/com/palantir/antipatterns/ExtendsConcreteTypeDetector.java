@@ -26,9 +26,6 @@ public class ExtendsConcreteTypeDetector implements Detector {
         if (BCELUtil.isSynthetic(obj)) {
             return;
         }
-        if (obj.isAbstract()) {
-            return;
-        }
         String name = obj.getClassName();
         if (!visited.add(name)) {
             return;

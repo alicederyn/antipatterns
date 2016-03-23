@@ -4,24 +4,31 @@ REPORT=$1
 ERRORS=0
 
 if grep -q "com.palantir.antipatterns.test.FinalClass is declared final" $REPORT; then
-  echo ✅  Final class PASSED
+  echo "✅  Final class PASSED"
 else
-  echo ❌  Final class FAILED >&2
+  echo "❌  Final class FAILED" >&2
   ERRORS=$[ ERRORS + 1 ]
 fi
 
 if grep -q "com.palantir.antipatterns.test.IllegalSubclassOfConcreteType extends concrete type java.util.ArrayList" $REPORT; then
-  echo ✅  Illegal subclass of concrete type PASSED
+  echo "✅  Illegal subclass of concrete type PASSED"
 else
-  echo ❌  Illegal subclass of concrete type FAILED >&2
+  echo "❌  Illegal subclass of concrete type FAILED" >&2
   ERRORS=$[ ERRORS + 1 ]
 fi
 
 if grep -q "com\.palantir\.antipatterns\.test\.SubclassOfAbstractType" $REPORT; then
-  echo ❌  Subclass of abstract type FAILED >&2
+  echo "❌  Subclass of abstract type FAILED" >&2
   ERRORS=$[ ERRORS + 1 ]
 else
-  echo ✅  Subclass of abstract type PASSED
+  echo "✅  Subclass of abstract type PASSED"
+fi
+
+if grep -q "com.palantir.antipatterns.test.IllegalAbstractSubclassOfConcreteType extends concrete type java.util.ArrayList" $REPORT; then
+  echo "✅  Illegal abstract subclass of concrete type PASSED"
+else
+  echo "❌  Illegal abstract subclass of concrete type FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
 fi
 
 if [[ $ERRORS != 0 ]]; then
