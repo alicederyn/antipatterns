@@ -24,6 +24,13 @@ else
   echo "✅  Subclass of abstract type PASSED"
 fi
 
+if grep -q "com\.palantir\.antipatterns\.test\.SubclassOfObject" $REPORT; then
+  echo "❌  Subclass of Object FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
+else
+  echo "✅  Subclass of Object PASSED"
+fi
+
 if grep -q "com.palantir.antipatterns.test.IllegalAbstractSubclassOfConcreteType extends concrete type java.util.ArrayList" $REPORT; then
   echo "✅  Illegal abstract subclass of concrete type PASSED"
 else
