@@ -33,7 +33,6 @@ public class ExtendsConcreteTypeDetector implements Detector {
         if (!visited.add(name)) {
             return;
         }
-        // TODO Interfaces
         if (obj.isFinal()) {
             bugReporter.reportBug(new BugInstance(this, "PT_FINAL_TYPE", NORMAL_PRIORITY)
                     .addClass(name));

@@ -38,6 +38,20 @@ else
   echo "✅  Subclass of Throwable PASSED"
 fi
 
+if grep -q "com\.palantir\.antipatterns\.test\.BasicInterface" $REPORT; then
+  echo "❌  Basic interface FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
+else
+  echo "✅  Basic interface PASSED"
+fi
+
+if grep -q "com\.palantir\.antipatterns\.test\.ExtendingInterface" $REPORT; then
+  echo "❌  Extending interface FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
+else
+  echo "✅  Extending interface PASSED"
+fi
+
 if grep -q "com.palantir.antipatterns.test.IllegalAbstractSubclassOfConcreteType extends concrete type java.util.ArrayList" $REPORT; then
   echo "✅  Illegal abstract subclass of concrete type PASSED"
 else
