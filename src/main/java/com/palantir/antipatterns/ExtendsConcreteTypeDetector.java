@@ -13,6 +13,9 @@ import edu.umd.cs.findbugs.bcel.BCELUtil;
 
 public class ExtendsConcreteTypeDetector implements Detector {
 
+    private static final String OBJECT = Object.class.getName();
+    private static final String THROWABLE = Throwable.class.getName();
+
     private final BugReporter bugReporter;
     private final Set<String> visited = new LinkedHashSet<>();
 
@@ -35,12 +38,11 @@ public class ExtendsConcreteTypeDetector implements Detector {
             bugReporter.reportBug(new BugInstance(this, "PT_FINAL_TYPE", NORMAL_PRIORITY)
                     .addClass(name));
         }
-        if ("java.lang.Object".equals(obj.getSuperclassName())) {
-            return;
-        }
-        // TODO Exceptions
         try {
-            if (obj.getSuperClass().isAbstract()) {
+            // Extending Object, an abstract type or Throwable are all permitted.
+            if (OBJECT.equals(obj.getSuperclassName())
+                    || obj.getSuperClass().isAbstract()
+                    || isThrowable(obj)) {
                 return;
             }
         } catch (ClassNotFoundException e) {
@@ -50,6 +52,15 @@ public class ExtendsConcreteTypeDetector implements Detector {
         bugReporter.reportBug(new BugInstance(this, "PT_EXTENDS_CONCRETE_TYPE", HIGH_PRIORITY)
                 .addClass(name)
                 .addClass(obj.getSuperclassName()));
+    }
+
+    private static boolean isThrowable(JavaClass cls) throws ClassNotFoundException {
+        for (JavaClass superClass : cls.getSuperClasses()) {
+            if (THROWABLE.equals(superClass.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
