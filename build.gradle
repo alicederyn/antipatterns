@@ -43,12 +43,13 @@ sourceSets {
     }
 }
 
-task integrationTest(type: FindBugs) {
+task integrationTestReport(type: FindBugs) {
   pluginClasspath = jar.outputs.files
   classes = fileTree(project.sourceSets.integrationTest.output.classesDir)
   source = project.sourceSets.integrationTest.java.srcDirs
   classpath = files()
-  //visitors = ['ExtendsConcreteTypeDetector']
+  ignoreFailures = true
+  visitors = ['ExtendsConcreteTypeDetector']
   reports {
     xml.enabled = false
     html {
@@ -58,9 +59,14 @@ task integrationTest(type: FindBugs) {
   }
 }
 
+task integrationTest(type: Exec) {
+  inputs.file 'build/findbugs.html'
+  commandLine 'scripts/check-integration-tests', 'build/findbugs.html'
+}
 
-integrationTest.dependsOn jar
-integrationTest.dependsOn integrationTestClasses
+integrationTestReport.dependsOn jar
+integrationTestReport.dependsOn integrationTestClasses
+integrationTest.dependsOn integrationTestReport
 integrationTest.shouldRunAfter test
 check.dependsOn integrationTest
 

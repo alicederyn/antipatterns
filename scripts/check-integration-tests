@@ -1,0 +1,25 @@
+#!/bin/bash
+
+REPORT=$1
+ERRORS=0
+
+if grep -q "com.palantir.antipatterns.test.FinalClass is declared final" $REPORT; then
+  echo Final class PASSED
+else
+  echo Final class FAILED >&2
+  ERRORS=$[ ERRORS + 1 ]
+fi
+
+if grep -q "com.palantir.antipatterns.test.IllegalSubclassOfConcreteType extends concrete type java.util.ArrayList" $REPORT; then
+  echo Illegal subclass of concrete type PASSED
+else
+  echo Illegal subclass of concrete type FAILED >&2
+  ERRORS=$[ ERRORS + 1 ]
+fi
+
+if [[ $ERRORS != 0 ]]; then
+  echo Error: $ERRORS tests failed >&2
+  echo See $REPORT >&2
+  exit 2
+fi
+exit 0
