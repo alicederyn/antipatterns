@@ -44,7 +44,6 @@ public class ExtendsConcreteTypeDetector implements Detector {
         // TODO Exceptions
         try {
             if (obj.getSuperClass().isAbstract()) {
-                // TODO Test this
                 return;
             }
         } catch (ClassNotFoundException e) {
