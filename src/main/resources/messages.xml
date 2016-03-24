@@ -13,9 +13,16 @@
         </Details>
     </Detector>
 
+    <Detector class="com.palantir.antipatterns.FinalSignatureDetector">
+        <Details>
+            This detector finds method signatures using types declared as final (which breaks
+            Mockito).
+        </Details>
+    </Detector>
+
     <Detector class="com.palantir.antipatterns.FinalTypeDetector">
         <Details>
-            This detector finds types declared as final (which breaks Mockito).
+            This detector finds types declared as final (which risks breaking Mockito).
         </Details>
     </Detector>
 
@@ -33,6 +40,38 @@
     </BugPattern>
 
     <BugCode abbrev="PTXCT">Extends concrete type</BugCode>
+
+    <BugPattern type="PT_FINAL_TYPE_PARAM">
+        <ShortDescription>Parameter of final type</ShortDescription>
+        <LongDescription>Parameter {0} of {2} is of final type {3}</LongDescription>
+        <Details>
+<![CDATA[
+  <p> Using final types in method signatures breaks proxying utilities like
+  <a href="http://mockito.org/">Mockito</a>. Extract an interface, or remove the final keyword and
+  hide the constructor instead. See also
+  <a href="https://codingantihero.wordpress.com/2016/02/08/antipattern-final-classes/"
+  >Antipattern: Final classes</a> </p>
+]]>
+        </Details>
+    </BugPattern>
+
+    <BugCode abbrev="PTFP">Parameter of final type</BugCode>
+
+    <BugPattern type="PT_FINAL_TYPE_RETURN">
+        <ShortDescription>Returns final type</ShortDescription>
+        <LongDescription>{1} returns final type {2}</LongDescription>
+        <Details>
+<![CDATA[
+  <p> Using final types in method signatures breaks proxying utilities like
+  <a href="http://mockito.org/">Mockito</a>. Extract an interface, or remove the final keyword and
+  hide the constructor instead. See also
+  <a href="https://codingantihero.wordpress.com/2016/02/08/antipattern-final-classes/"
+  >Antipattern: Final classes</a> </p>
+]]>
+        </Details>
+    </BugPattern>
+
+    <BugCode abbrev="PTFR">Returns final type</BugCode>
 
     <BugPattern type="PT_FINAL_TYPE">
         <ShortDescription>Class declared final</ShortDescription>

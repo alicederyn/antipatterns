@@ -1,16 +1,12 @@
 package com.palantir.antipatterns.test;
 
-import java.util.AbstractList;
+import java.util.AbstractMap;
+import java.util.Set;
 
-public class SubclassOfAbstractType extends AbstractList<String> {
-
-    @Override
-    public int size() {
-        throw new UnsupportedOperationException();
-    }
+public class SubclassOfAbstractType extends AbstractMap<String, String> {
 
     @Override
-    public String get(int index) {
+    public Set<java.util.Map.Entry<String, String>> entrySet() {
         throw new UnsupportedOperationException();
     }
 }

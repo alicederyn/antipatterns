@@ -59,6 +59,48 @@ else
   ERRORS=$[ ERRORS + 1 ]
 fi
 
+if grep -q "Parameter 0 of com.palantir.antipatterns.test.FinalParameter.doSomething(FinalClass) is of final type com.palantir.antipatterns.test.FinalClass" $REPORT; then
+  echo "✅  Final parameter PASSED"
+else
+  echo "❌  Final parameter FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
+fi
+
+if grep -q "com.palantir.antipatterns.test.FinalReturn.doSomething() returns final type com.palantir.antipatterns.test.FinalClass" $REPORT; then
+  echo "✅  Final return PASSED"
+else
+  echo "❌  Final return FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
+fi
+
+if grep -q "com\.palantir\.antipatterns\.test\.IntegerParameter" $REPORT; then
+  echo "❌  Integer parameter FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
+else
+  echo "✅  Integer parameter PASSED"
+fi
+
+if grep -q "com\.palantir\.antipatterns\.test\.IntegerReturn" $REPORT; then
+  echo "❌  Integer return FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
+else
+  echo "✅  Integer return PASSED"
+fi
+
+if grep -q "com\.palantir\.antipatterns\.test\.StringParameter" $REPORT; then
+  echo "❌  String parameter FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
+else
+  echo "✅  String parameter PASSED"
+fi
+
+if grep -q "com\.palantir\.antipatterns\.test\.StringReturn" $REPORT; then
+  echo "❌  String return FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
+else
+  echo "✅  String return PASSED"
+fi
+
 if [[ $ERRORS != 0 ]]; then
   echo Error: $ERRORS tests failed >&2
   echo See $REPORT >&2

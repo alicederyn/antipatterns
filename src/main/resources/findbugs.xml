@@ -1,10 +1,17 @@
 <FindbugsPlugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="findbugsplugin.xsd" pluginid="palantir.antipatterns.detector"
     defaultenabled="true" provider="Palantir Antipatterns Detector" website="https://github.com/palantir/antipatterns">
+
     <Detector class="com.palantir.antipatterns.ExtendsConcreteTypeDetector"
         speed="fast" disabled="false" reports="PT_EXTENDS_CONCRETE_TYPE" />
+    <Detector class="com.palantir.antipatterns.FinalSignatureDetector"
+        speed="fast" disabled="false" reports="PT_FINAL_TYPE_PARAM,PT_FINAL_TYPE_RETURN" />
     <Detector class="com.palantir.antipatterns.FinalTypeDetector"
         speed="fast" disabled="false" reports="PT_FINAL_TYPE" />
+
     <BugPattern abbrev="PTXCT" type="PT_EXTENDS_CONCRETE_TYPE" category="CORRECTNESS" />
+    <BugPattern abbrev="PTFP" type="PT_FINAL_TYPE_PARAM" category="CORRECTNESS" />
+    <BugPattern abbrev="PTFR" type="PT_FINAL_TYPE_RETURN" category="CORRECTNESS" />
     <BugPattern abbrev="PTF" type="PT_FINAL_TYPE" category="CORRECTNESS" />
+
 </FindbugsPlugin>
