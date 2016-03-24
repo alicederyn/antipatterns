@@ -31,8 +31,9 @@
         <LongDescription>{0} extends concrete type {1}</LongDescription>
         <Details>
 <![CDATA[
-  <p> Subclassing concrete types is fragile. Extract a common abstract superclass or interface, or
-  use a proxy to implement the delegation pattern. See also
+  <p> Subclassing concrete types is fragile. Prefer composition to inheritance: extract a common
+  interface, or use a proxy to implement the delegation pattern. In the rare case of genuine
+  shared behaviour (e.g. AbstractList), carefully extract a common abstract superclass. See also
   <a href="https://codingantihero.wordpress.com/2016/02/08/antipattern-final-classes/"
   >Antipattern: Final classes</a> </p>
 ]]>
