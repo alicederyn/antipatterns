@@ -49,7 +49,7 @@ task integrationTestReport(type: FindBugs) {
   source = project.sourceSets.integrationTest.java.srcDirs
   classpath = files()
   ignoreFailures = true
-  visitors = ['ExtendsConcreteTypeDetector']
+  reportLevel = "low"
   reports {
     xml.enabled = false
     html {

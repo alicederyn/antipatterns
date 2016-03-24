@@ -9,8 +9,13 @@
 
     <Detector class="com.palantir.antipatterns.ExtendsConcreteTypeDetector">
         <Details>
-            This detector finds types that extend concrete (i.e. non-abstract) types, as well as
-            types unnecessarily declared as final (which breaks Mockito).
+            This detector finds types that extend concrete (i.e. non-abstract) types.
+        </Details>
+    </Detector>
+
+    <Detector class="com.palantir.antipatterns.FinalTypeDetector">
+        <Details>
+            This detector finds types declared as final (which breaks Mockito).
         </Details>
     </Detector>
 
