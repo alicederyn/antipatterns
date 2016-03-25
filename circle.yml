@@ -5,3 +5,10 @@ machine:
 test:
   override:
     - ./gradlew --console=plain check
+
+deployment:
+  release:
+    tag: /[0-9]+(\.[0-9]+)+(-.+)?/
+    commands:
+      - git status  # Work around https://github.com/palantir/gradle-git-version/issues/28
+      - ./gradlew --console=plain -i bintrayUpload

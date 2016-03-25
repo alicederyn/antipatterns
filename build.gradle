@@ -2,10 +2,11 @@
  * Copyright 2016 Palantir Technologies, Inc. All rights reserved.
  */
 
-buildscript {
-    repositories {
-        jcenter()
-    }
+plugins {
+  id 'com.github.johnrengelman.shadow' version '1.2.3'
+  id 'com.jfrog.artifactory' version '4.0.0'
+  id 'com.jfrog.bintray' version '1.6'
+  id 'com.palantir.git-version' version '0.2.0'
 }
 
 repositories {
@@ -20,8 +21,13 @@ apply plugin: 'findbugs'
 sourceCompatibility = '1.7'
 targetCompatibility = '1.7'
 
+apply from: "${rootDir}/gradle/publish.gradle"
+
+group 'com.palantir.common'
+version gitVersion()
+
 dependencies {
-  compile 'com.google.code.findbugs:findbugs:3.0.1'
+  compileOnly 'com.google.code.findbugs:findbugs:3.0.1'
   compile 'com.google.guava:guava:18.0'
   testCompile 'junit:junit:4.12'
   testCompile 'com.google.truth:truth:0.28'
@@ -64,7 +70,7 @@ task integrationTest(type: Exec) {
   commandLine 'scripts/check-integration-tests', 'build/findbugs.html'
 }
 
-integrationTestReport.dependsOn jar
+integrationTestReport.dependsOn shadowJar
 integrationTestReport.dependsOn integrationTestClasses
 integrationTest.dependsOn integrationTestReport
 integrationTest.shouldRunAfter test

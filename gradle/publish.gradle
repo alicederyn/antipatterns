@@ -1,0 +1,67 @@
+apply plugin: 'maven-publish'
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier 'sources'
+    baseName = "${project.name}-unshaded"
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+    destinationDir rootProject.file("${buildDir}/libs")
+}
+
+shadowJar {
+    relocate 'com.google', 'com.palantir.antipatterns.shaded.guava'
+    baseName = project.name
+    classifier = null
+}
+
+tasks.build.dependsOn sourceJar, javadocJar
+
+publishing {
+    publications {
+        bintray(MavenPublication) {
+            from components.shadow
+        }
+    }
+}
+
+
+artifactory {
+    publish {
+        contextUrl = 'https://oss.jfrog.org/artifactory'
+        repository {
+            repoKey = (project.version =~ /-/ ? 'oss-snapshot-local' : 'oss-release-local')
+            username = System.env.BINTRAY_USER
+            password = System.env.BINTRAY_KEY
+            maven = true
+        }
+        defaults {
+            publications (publishing.publications.bintray)
+            properties = ['git': project.version]
+        }
+    }
+}
+artifactoryPublish.dependsOn 'generatePomFileForBintrayPublication', 'build'
+
+bintray {
+    user = System.env.BINTRAY_USER
+    key = System.env.BINTRAY_KEY
+    publish = true
+    pkg {
+        repo = 'releases'
+        name = project.name
+        userOrg = 'palantir'
+        licenses = ['Apache-2.0']
+        publications = ['bintray']
+    }
+}
+
+bintrayUpload.onlyIf {
+    System.env.BINTRAY_USER && System.env.BINTRAY_KEY
+}
+
+bintrayUpload.dependsOn 'generatePomFileForBintrayPublication', 'build'
+
