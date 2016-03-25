@@ -7,5 +7,5 @@ The plugin name, 'antipatterns', is aspirational: we hope to add more modern Jav
 [codingantihero]: https://codingantihero.wordpress.com/2016/02/08/antipattern-final-classes/
 [issue tracker]: https://github.com/palantir/antipatterns/issues
 
-[![CircleCI Build Status](https://circleci.com/gh/palantir/antipatterns/tree/master.svg)](https://circleci.com/gh/palantir/antipatterns)
+[![CircleCI Build Status](https://circleci.com/gh/palantir/antipatterns.svg?style=svg&circle-token=198b658b598ace680a676ece564df2a0f0690d33)](https://circleci.com/gh/palantir/antipatterns)
 [![Download](https://api.bintray.com/packages/palantir/releases/antipatterns/images/download.svg) ](https://bintray.com/palantir/releases/antipatterns/_latestVersion)
