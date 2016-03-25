@@ -1,0 +1,7 @@
+machine:
+  java:
+    version: oraclejdk7
+
+test:
+  override:
+    - ./gradlew check
