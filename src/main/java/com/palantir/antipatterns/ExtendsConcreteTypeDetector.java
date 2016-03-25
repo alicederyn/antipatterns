@@ -1,5 +1,7 @@
 package com.palantir.antipatterns;
 
+import static edu.umd.cs.findbugs.ba.Hierarchy.isSubtype;
+
 import org.apache.bcel.classfile.JavaClass;
 
 import edu.umd.cs.findbugs.BugInstance;
@@ -42,12 +44,7 @@ public class ExtendsConcreteTypeDetector implements Detector {
     }
 
     private static boolean isThrowable(JavaClass cls) throws ClassNotFoundException {
-        for (JavaClass superClass : cls.getSuperClasses()) {
-            if (THROWABLE.equals(superClass.getClassName())) {
-                return true;
-            }
-        }
-        return false;
+        return isSubtype(cls.getClassName(), THROWABLE);
     }
 
     @Override
