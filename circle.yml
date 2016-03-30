@@ -4,4 +4,4 @@ machine:
 
 test:
   override:
-    - ./gradlew check
+    - ./gradlew --console=plain check
