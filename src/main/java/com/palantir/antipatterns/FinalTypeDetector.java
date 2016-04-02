@@ -22,7 +22,7 @@ public class FinalTypeDetector implements Detector {
         if (BCELUtil.isSynthetic(obj)) {
             return;
         }
-        if (obj.isFinal()) {
+        if (obj.isFinal() && !obj.isEnum()) {
             bugReporter.reportBug(new BugInstance(this, "PT_FINAL_TYPE", LOW_PRIORITY)
                     .addClass(obj.getClassName()));
         }

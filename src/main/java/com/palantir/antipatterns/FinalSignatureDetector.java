@@ -49,12 +49,12 @@ public class FinalSignatureDetector implements Detector {
         if (type instanceof ObjectType) {
             try {
                 String className = ((ObjectType) type).getClassName();
-                if (className.startsWith("java.lang.")) {
+                if (className.startsWith("java.")) {
                     // Types in java.lang are final for security reasons.
                     return false;
                 }
                 JavaClass cls = classContext.getAnalysisContext().lookupClass(className);
-                return cls.isFinal();
+                return cls.isFinal() && !cls.isEnum();
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }

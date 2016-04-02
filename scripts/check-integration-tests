@@ -10,6 +10,13 @@ else
   ERRORS=$[ ERRORS + 1 ]
 fi
 
+if grep -q "com\.palantir\.antipatterns\.test\.SimpleEnum" $REPORT; then
+  echo "❌  Simple enum FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
+else
+  echo "✅  Simple enum PASSED"
+fi
+
 if grep -q "com.palantir.antipatterns.test.IllegalSubclassOfConcreteType extends concrete type java.util.ArrayList" $REPORT; then
   echo "✅  Illegal subclass of concrete type PASSED"
 else
@@ -99,6 +106,20 @@ if grep -q "com\.palantir\.antipatterns\.test\.StringReturn" $REPORT; then
   ERRORS=$[ ERRORS + 1 ]
 else
   echo "✅  String return PASSED"
+fi
+
+if grep -q "com\.palantir\.antipatterns\.test\.EnumParameter" $REPORT; then
+  echo "❌  Enum parameter FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
+else
+  echo "✅  Enum parameter PASSED"
+fi
+
+if grep -q "com\.palantir\.antipatterns\.test\.EnumReturn" $REPORT; then
+  echo "❌  Enum return FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
+else
+  echo "✅  Enum return PASSED"
 fi
 
 if [[ $ERRORS != 0 ]]; then
