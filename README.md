@@ -43,6 +43,6 @@ Alternatively, if you're running FindBugs standalone, download [the latest antip
 
 This detector finds types that extend non-abstract supertypes. Types that are designed for extension should unambiguously indicate it by being declared abstract; types that are not abstract should never be extended. Instances of this antipattern should be refactored in one of the following ways (assuming type Bar extends type Foo):
 
-1) Extract an abstract superclass, AbstractFoo, and have both Foo and Bar extend it [design for extension]
-2) **[Delegation pattern](https://en.wikipedia.org/wiki/Delegation_pattern):** Add a field of type Foo to Bar, typically called `delegate`, and explicitly call Foo's methods from Bar's methods
-3) **[Strategy pattern](https://en.wikipedia.org/wiki/Strategy_pattern):** Add a strategy object to Foo that allows you to configure it to act like a Bar.
+ 1. Extract an abstract superclass, AbstractFoo, and have both Foo and Bar extend it [design for extension]
+ 2. **[Delegation pattern](https://en.wikipedia.org/wiki/Delegation_pattern):** Add a field of type Foo to Bar, typically called `delegate`, and explicitly call Foo's methods from Bar's methods
+ 3. **[Strategy pattern](https://en.wikipedia.org/wiki/Strategy_pattern):** Add a strategy object to Foo that allows you to configure it to act like a Bar.
