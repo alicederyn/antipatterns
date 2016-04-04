@@ -26,21 +26,23 @@ public class FinalSignatureDetector implements Detector {
             return;
         }
         for (Method method : obj.getMethods()) {
-            if (isIllegalFinalType(method.getReturnType(), classContext)) {
-                bugReporter.reportBug(new BugInstance(this, "PT_FINAL_TYPE_RETURN", NORMAL_PRIORITY)
-                        .addClassAndMethod(obj, method)
-                        .addType(method.getReturnType()));
-            }
-            int param = 0;
-            for (Type type : method.getArgumentTypes()) {
-                if (isIllegalFinalType(type, classContext)) {
-                    bugReporter.reportBug(
-                            new BugInstance(this, "PT_FINAL_TYPE_PARAM", NORMAL_PRIORITY)
-                                    .addInt(param)
-                                    .addClassAndMethod(obj, method)
-                                    .addType(type));
+            if (method.isPublic() || method.isProtected()) {
+                if (isIllegalFinalType(method.getReturnType(), classContext)) {
+                    bugReporter.reportBug(new BugInstance(this, "PT_FINAL_TYPE_RETURN", NORMAL_PRIORITY)
+                            .addClassAndMethod(obj, method)
+                            .addType(method.getReturnType()));
                 }
-                param++;
+                int param = 0;
+                for (Type type : method.getArgumentTypes()) {
+                    if (isIllegalFinalType(type, classContext)) {
+                        bugReporter.reportBug(
+                                new BugInstance(this, "PT_FINAL_TYPE_PARAM", NORMAL_PRIORITY)
+                                        .addInt(param)
+                                        .addClassAndMethod(obj, method)
+                                        .addType(type));
+                    }
+                    param++;
+                }
             }
         }
     }

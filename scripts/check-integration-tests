@@ -122,6 +122,34 @@ else
   echo "✅  Enum return PASSED"
 fi
 
+if grep -q "com\.palantir\.antipatterns\.test\.PackageFinalParameter" $REPORT; then
+  echo "❌  Package final parameter FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
+else
+  echo "✅  Package final parameter PASSED"
+fi
+
+if grep -q "com\.palantir\.antipatterns\.test\.PackageFinalReturn" $REPORT; then
+  echo "❌  Package final return FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
+else
+  echo "✅  Package final return PASSED"
+fi
+
+if grep -q "Parameter 0 of com.palantir.antipatterns.test.ProtectedFinalParameter.doSomething(FinalClass) is of final type com.palantir.antipatterns.test.FinalClass" $REPORT; then
+  echo "✅  Protected final parameter PASSED"
+else
+  echo "❌  Protected final parameter FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
+fi
+
+if grep -q "com.palantir.antipatterns.test.ProtectedFinalReturn.doSomething() returns final type com.palantir.antipatterns.test.FinalClass" $REPORT; then
+  echo "✅  Protected final return PASSED"
+else
+  echo "❌  Protected final return FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
+fi
+
 if [[ $ERRORS != 0 ]]; then
   echo Error: $ERRORS tests failed >&2
   echo See $REPORT >&2
