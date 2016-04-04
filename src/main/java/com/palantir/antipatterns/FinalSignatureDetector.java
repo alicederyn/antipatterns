@@ -1,5 +1,7 @@
 package com.palantir.antipatterns;
 
+import static org.apache.bcel.Constants.CONSTRUCTOR_NAME;
+
 import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
 import org.apache.bcel.generic.ObjectType;
@@ -32,6 +34,10 @@ public class FinalSignatureDetector implements Detector {
                             .addClassAndMethod(obj, method)
                             .addType(method.getReturnType()));
                 }
+                if (obj.isFinal() && isConstructor(method)) {
+                    bugReporter.reportBug(new BugInstance(this, "PT_FINAL_TYPE_CONSTRUCTOR", NORMAL_PRIORITY)
+                            .addClassAndMethod(obj, method));
+                }
                 int param = 0;
                 for (Type type : method.getArgumentTypes()) {
                     if (isIllegalFinalType(type, classContext)) {
@@ -45,6 +51,10 @@ public class FinalSignatureDetector implements Detector {
                 }
             }
         }
+    }
+
+    private static boolean isConstructor(Method method) {
+        return method.getName().equals(CONSTRUCTOR_NAME);
     }
 
     private static boolean isIllegalFinalType(Type type, ClassContext classContext) {

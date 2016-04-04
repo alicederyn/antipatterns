@@ -15,14 +15,8 @@
 
     <Detector class="com.palantir.antipatterns.FinalSignatureDetector">
         <Details>
-            This detector finds method signatures using types declared as final (which breaks
+            This detector finds public method signatures using types declared as final (which breaks
             Mockito).
-        </Details>
-    </Detector>
-
-    <Detector class="com.palantir.antipatterns.FinalTypeDetector">
-        <Details>
-            This detector finds types declared as final (which risks breaking Mockito).
         </Details>
     </Detector>
 
@@ -74,19 +68,20 @@
 
     <BugCode abbrev="PTFR">Returns final type</BugCode>
 
-    <BugPattern type="PT_FINAL_TYPE">
-        <ShortDescription>Class declared final</ShortDescription>
-        <LongDescription>{0} is declared final</LongDescription>
+    <BugPattern type="PT_FINAL_TYPE_CONSTRUCTOR">
+        <ShortDescription>Public constructor on final type</ShortDescription>
+        <LongDescription>Final type has public constructor {0}</LongDescription>
         <Details>
 <![CDATA[
-  <p> Marking types as final breaks proxying utilities like
-  <a href="http://mockito.org/">Mockito</a>. Prefer hidden constructors and static factory
-  methods&mdash;or just trust your users not to do anything stupid. See also
+  <p> Final types break proxying utilities like <a href="http://mockito.org/">Mockito</a>.
+  Remove the final keyword. To prevent subclassing, hide the constructor behind a static factory
+  method&mdash;or just trust your users not to do anything stupid. See also
   <a href="https://codingantihero.wordpress.com/2016/02/08/antipattern-final-classes/"
   >Antipattern: Final classes</a> </p>
 ]]>
         </Details>
     </BugPattern>
 
-    <BugCode abbrev="PTF">Class declared final</BugCode>
+    <BugCode abbrev="PTFC">Public constructor on final type</BugCode>
+
 </MessageCollection>

@@ -5,13 +5,11 @@
     <Detector class="com.palantir.antipatterns.ExtendsConcreteTypeDetector"
         speed="fast" disabled="false" reports="PT_EXTENDS_CONCRETE_TYPE" />
     <Detector class="com.palantir.antipatterns.FinalSignatureDetector"
-        speed="fast" disabled="false" reports="PT_FINAL_TYPE_PARAM,PT_FINAL_TYPE_RETURN" />
-    <Detector class="com.palantir.antipatterns.FinalTypeDetector"
-        speed="fast" disabled="false" reports="PT_FINAL_TYPE" />
+        speed="fast" disabled="false" reports="PT_FINAL_TYPE_PARAM,PT_FINAL_TYPE_RETURN,PT_FINAL_TYPE_CONSTRUCTOR" />
 
     <BugPattern abbrev="PTXCT" type="PT_EXTENDS_CONCRETE_TYPE" category="CORRECTNESS" />
     <BugPattern abbrev="PTFP" type="PT_FINAL_TYPE_PARAM" category="CORRECTNESS" />
     <BugPattern abbrev="PTFR" type="PT_FINAL_TYPE_RETURN" category="CORRECTNESS" />
-    <BugPattern abbrev="PTF" type="PT_FINAL_TYPE" category="CORRECTNESS" />
+    <BugPattern abbrev="PTFC" type="PT_FINAL_TYPE_CONSTRUCTOR" category="CORRECTNESS" />
 
 </FindbugsPlugin>

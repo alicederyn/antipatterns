@@ -3,7 +3,7 @@
 REPORT=$1
 ERRORS=0
 
-if grep -q "com.palantir.antipatterns.test.FinalClass is declared final" $REPORT; then
+if grep -q "Final type has public constructor com.palantir.antipatterns.test.FinalClass" $REPORT; then
   echo "✅  Final class PASSED"
 else
   echo "❌  Final class FAILED" >&2
@@ -15,6 +15,20 @@ if grep -q "com\.palantir\.antipatterns\.test\.SimpleEnum" $REPORT; then
   ERRORS=$[ ERRORS + 1 ]
 else
   echo "✅  Simple enum PASSED"
+fi
+
+if grep -q "com\.palantir\.antipatterns\.test\.PackageFinalClass" $REPORT; then
+  echo "❌  Package final class FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
+else
+  echo "✅  Package final class PASSED"
+fi
+
+if grep -q "com\.palantir\.antipatterns\.test\.UtilityClass" $REPORT; then
+  echo "❌  Utility class FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
+else
+  echo "✅  Utility class PASSED"
 fi
 
 if grep -q "com.palantir.antipatterns.test.IllegalSubclassOfConcreteType extends concrete type java.util.ArrayList" $REPORT; then
