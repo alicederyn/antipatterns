@@ -43,7 +43,7 @@ Alternatively, if you're running FindBugs standalone, download [the latest antip
 
 **Antipattern detected:** Extending a non-abstract type.
 
-**Motivation:** Designing for extension is expensive, and should only be done when necessary. Extending types that are not intended to be extended is dangerous, as the implementation may change in ways that do not affect composition, but break subclasses; for instance, changing one method to call another (to remove duplication) or to stop calling it (to improve performance). Preventing extension of a type that's not designed for it is expensive in Java: declaring the class final breaks dynamic proxies like [Mockito]; hiding the constructor behind a public factory method requires more code, and is often less idiomatic. (It's also easy to miss when a constructor has been accidentally left public.) Instead, types that are designed for extension should unambiguously indicate it by being declared abstract; types that are not abstract should never be extended.
+**Motivation:** Fragile. Designing for extension is expensive, and should only be done when necessary. Extending types that are not intended to be extended is dangerous, as the implementation may change in ways that do not affect composition, but break subclasses; for instance, changing one method to call another (to remove duplication) or to stop calling it (to improve performance). Preventing extension of a type that's not designed for it is expensive in Java: declaring the class final breaks dynamic proxies like [Mockito]; hiding the constructor behind a public factory method requires more code, and is often less idiomatic. (It's also easy to miss when a constructor has been accidentally left public.) Instead, types that are designed for extension should unambiguously indicate it by being declared abstract; types that are not abstract should never be extended.
 
 **Suggested alternatives:** Instances of this antipattern should be refactored in one of the following ways (assuming type Bar extends type Foo):
 
@@ -55,3 +55,20 @@ Alternatively, if you're running FindBugs standalone, download [the latest antip
 [Abstract class]: https://en.wikipedia.org/wiki/Abstract_type
 [Delegation pattern]: https://en.wikipedia.org/wiki/Delegation_pattern
 [Strategy pattern]: https://en.wikipedia.org/wiki/Strategy_pattern
+
+### FinalSignatureDetector
+
+**Antipattern detected:** Accepting or returning a final type.
+
+**Motivation:** Untestable. Unit testing involves isolating the component being tested from the rest of the system by substituting the real implementation of a type for a [test double]. Final types subvert this by being impossible to substitute: the JVM itself prevents behaviour substitution. This is rooted in the origins of the language as a way to run untrusted user code in a sandbox; without final types, the sandbox could never trust the values returned by the user code, as they could trigger arbitrary behaviour that would be very hard to reason about. (For instance, overriding equals could give the type access to other classloaders.) This is clearly overkill for most Java code, and disables really useful testing tools, such as [Mockito's ReturnsSmartNulls]. If you provide a library, exposing final types forces your users to use the [Adapter pattern] to hide your library behind a testable façade.
+
+**Suggested alternatives:** Instances of this antipattern should be refactored in one of the following ways (assuming type Bar has a method baz that consumes or returns type Foo):
+
+1. **Interface:** Rename Foo as FooImpl, and extract an interface called Foo. Consume/return the Foo interface rather than the concrete FooImpl type in Bar.baz.
+2. **Factory method:** Remove the final keyword from Foo, and instead declare the constructor private to prevent subclassing. Make a static factory method on Foo to allow instances to be constructed.
+3. **Pin your API:** Remove the final keyword from Foo, and guarantee not to make subclass-breaking changes in future.
+4. **Trust your users:** Remove the final keyword from Foo, and trust your users not to make any fragile subclasses. Use the antipatterns plugin to enforce this contract within your own company. May be a bit optimistic for a big open-source project like Guava, but otherwise the cleanest option.
+
+[test double]: https://nirajrules.wordpress.com/2011/08/27/dummy-vs-stub-vs-spy-vs-fake-vs-mock/
+[Mockito's ReturnsSmartNulls]: http://site.mockito.org/mockito/docs/current/org/mockito/internal/stubbing/defaultanswers/ReturnsSmartNulls.html
+[Adapter pattern]: https://en.wikipedia.org/wiki/Adapter_pattern
