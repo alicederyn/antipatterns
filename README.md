@@ -41,8 +41,17 @@ Alternatively, if you're running FindBugs standalone, download [the latest antip
 
 ### ExtendsConcreteTypeDetector
 
-This detector finds types that extend non-abstract supertypes. Types that are designed for extension should unambiguously indicate it by being declared abstract; types that are not abstract should never be extended. Instances of this antipattern should be refactored in one of the following ways (assuming type Bar extends type Foo):
+**Antipattern detected:** Extending a non-abstract type.
 
- 1. Extract an abstract superclass, AbstractFoo, and have both Foo and Bar extend it [design for extension]
- 2. **[Delegation pattern](https://en.wikipedia.org/wiki/Delegation_pattern):** Add a field of type Foo to Bar, typically called `delegate`, and explicitly call Foo's methods from Bar's methods
- 3. **[Strategy pattern](https://en.wikipedia.org/wiki/Strategy_pattern):** Add a strategy object to Foo that allows you to configure it to act like a Bar.
+**Motivation:** Designing for extension is expensive, and should only be done when necessary. Extending types that are not intended to be extended is dangerous, as the implementation may change in ways that do not affect composition, but break subclasses; for instance, changing one method to call another (to remove duplication) or to stop calling it (to improve performance). Preventing extension of a type that's not designed for it is expensive in Java: declaring the class final breaks dynamic proxies like [Mockito]; hiding the constructor behind a public factory method requires more code, and is often less idiomatic. (It's also easy to miss when a constructor has been accidentally left public.) Instead, types that are designed for extension should unambiguously indicate it by being declared abstract; types that are not abstract should never be extended.
+
+**Suggested alternatives:** Instances of this antipattern should be refactored in one of the following ways (assuming type Bar extends type Foo):
+
+ 1. **[Abstract class]:** Extract an abstract superclass, AbstractFoo, and have both Foo and Bar extend it.
+ 2. **[Delegation pattern]:** Add a field of type Foo to Bar, typically called `delegate`, and explicitly call Foo's methods from Bar's methods.
+ 3. **[Strategy pattern]:** Add a strategy object to Foo that allows you to configure it to act like a Bar.
+
+[Mockito]: http://mockito.org/
+[Abstract class]: https://en.wikipedia.org/wiki/Abstract_type
+[Delegation pattern]: https://en.wikipedia.org/wiki/Delegation_pattern
+[Strategy pattern]: https://en.wikipedia.org/wiki/Strategy_pattern
