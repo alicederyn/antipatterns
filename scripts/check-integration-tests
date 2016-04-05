@@ -17,6 +17,13 @@ else
   echo "✅  Simple enum PASSED"
 fi
 
+if grep -q "com\.palantir\.antipatterns\.test\.SubclassedEnum" $REPORT; then
+  echo "❌  Subclassed enum FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
+else
+  echo "✅  Subclassed enum PASSED"
+fi
+
 if grep -q "com\.palantir\.antipatterns\.test\.PackageFinalClass" $REPORT; then
   echo "❌  Package final class FAILED" >&2
   ERRORS=$[ ERRORS + 1 ]

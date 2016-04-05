@@ -31,6 +31,7 @@ public class ExtendsConcreteTypeDetector implements Detector {
             // Extending Object, an abstract type or Throwable are all permitted.
             if (OBJECT.equals(obj.getSuperclassName())
                     || obj.getSuperClass().isAbstract()
+                    || obj.getSuperClass().isEnum()
                     || isThrowable(obj)) {
                 return;
             }
