@@ -56,6 +56,10 @@ Now running `gradle check` will include the antipatterns checks.
 [Delegation pattern]: https://en.wikipedia.org/wiki/Delegation_pattern
 [Strategy pattern]: https://en.wikipedia.org/wiki/Strategy_pattern
 
+**Related detectors:** [DesignForExtension] places additional constraints on classes intended to be extended.
+
+[DesignForExtension]: http://checkstyle.sourceforge.net/config_design.html#DesignForExtension
+
 ### FinalSignatureDetector
 
 **Antipattern detected:** Accepting or returning a final type in a public method.
@@ -72,6 +76,10 @@ Now running `gradle check` will include the antipatterns checks.
 [test doubles]: https://nirajrules.wordpress.com/2011/08/27/dummy-vs-stub-vs-spy-vs-fake-vs-mock/
 [Mockito's ReturnsSmartNulls]: http://site.mockito.org/mockito/docs/current/org/mockito/internal/stubbing/defaultanswers/ReturnsSmartNulls.html
 [Adapter pattern]: https://en.wikipedia.org/wiki/Adapter_pattern
+
+**Related detectors:** [DesignForExtension] requires public methods on non-final classes be abstract, final or empty; if you want to follow options 3 or 4, you will need to disable it. [FinalClass] requires that classes with private constructors be declared as final; if you want to follow option 2, you will need to disable it. Option 1 is compatible with both detectors.
+
+[FinalClass]: http://checkstyle.sourceforge.net/config_design.html#FinalClass
 
 ## Building from source
 
