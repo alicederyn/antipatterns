@@ -12,7 +12,7 @@ The plugin name, 'antipatterns', is aspirational: we hope to add more modern Jav
 
 ## Checking for antipatterns
 
-To enable the antipatterns plugin in Gradle, just use the `findbugsPlugins` extension point:
+**Gradle:** To enable the antipatterns plugin in Gradle, just use the `findbugsPlugins` extension point:
 
 ```gradle
 plugin 'findbugs'
@@ -23,7 +23,7 @@ dependencies {
 
 Now running `gradle check` will include the antipatterns checks.
 
-If you're using [the FindBugs Maven plugin](http://gleclaire.github.io/findbugs-maven-plugin/usage.html#Using_Detectors_from_a_Repository):
+**Maven:** If you're using [the FindBugs Maven plugin](http://gleclaire.github.io/findbugs-maven-plugin/usage.html#Using_Detectors_from_a_Repository):
 
 ```maven
 <configuration>
@@ -37,7 +37,7 @@ If you're using [the FindBugs Maven plugin](http://gleclaire.github.io/findbugs-
 </configuration>
 ```
 
-Alternatively, if you're running FindBugs standalone, download [the latest antipatterns version](https://bintray.com/palantir/releases/antipatterns/_latestVersion), and place it in the `plugin` directory in your FindBugs installation.
+**Standalone:** Alternatively, if you're running FindBugs standalone, download [the latest antipatterns version](https://bintray.com/palantir/releases/antipatterns/_latestVersion), and place it in the `plugin` directory in your FindBugs installation.
 
 ### ExtendsConcreteTypeDetector
 
