@@ -72,3 +72,8 @@ Alternatively, if you're running FindBugs standalone, download [the latest antip
 [test double]: https://nirajrules.wordpress.com/2011/08/27/dummy-vs-stub-vs-spy-vs-fake-vs-mock/
 [Mockito's ReturnsSmartNulls]: http://site.mockito.org/mockito/docs/current/org/mockito/internal/stubbing/defaultanswers/ReturnsSmartNulls.html
 [Adapter pattern]: https://en.wikipedia.org/wiki/Adapter_pattern
+
+## Building from source
+
+To build antipatterns from source, run `./gradlew shadowJar`. To run the tests, run `./gradlew integrationTest`. Publishing a new artifact is done automatically in CircleCI when a new tag is committed to GitHub.
+
