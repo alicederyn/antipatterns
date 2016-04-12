@@ -35,7 +35,7 @@ targetCompatibility = '1.7'
 
 apply from: "${rootDir}/gradle/publish.gradle"
 
-group 'com.palantir.common'
+group 'com.palantir.antipatterns'
 version gitVersion()
 
 dependencies {

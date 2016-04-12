@@ -17,7 +17,7 @@ The plugin name, 'antipatterns', is aspirational: we hope to add more modern Jav
 ```gradle
 plugin 'findbugs'
 dependencies {
-    findbugsPlugins 'com.palantir.common:antipatterns:+'
+    findbugsPlugins 'com.palantir.antipatterns:antipatterns:+'
 }
 ```
 
@@ -29,7 +29,7 @@ Now running `gradle check` will include the antipatterns checks.
 <configuration>
   <plugins>
     <plugin>
-      <groupId>com.palantir.common</groupId>
+      <groupId>com.palantir.antipatterns</groupId>
       <artifactId>antipatterns</artifactId>
       <version>[1.0.0,)</version>
     </plugin>
