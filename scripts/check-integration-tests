@@ -52,6 +52,13 @@ else
   echo "✅  Subclass of abstract type PASSED"
 fi
 
+if grep -q "com\.palantir\.antipatterns\.test\.SubclassOfTypeWithProtectedConstructor" $REPORT; then
+  echo "❌  Subclass of type with protected constructor FAILED" >&2
+  ERRORS=$[ ERRORS + 1 ]
+else
+  echo "✅  Subclass of type with protected constructor PASSED"
+fi
+
 if grep -q "com\.palantir\.antipatterns\.test\.SubclassOfObject" $REPORT; then
   echo "❌  Subclass of Object FAILED" >&2
   ERRORS=$[ ERRORS + 1 ]

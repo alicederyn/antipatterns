@@ -17,7 +17,10 @@ package com.palantir.antipatterns;
 
 import static edu.umd.cs.findbugs.ba.Hierarchy.isSubtype;
 
+import static org.apache.bcel.Constants.CONSTRUCTOR_NAME;
+
 import org.apache.bcel.classfile.JavaClass;
+import org.apache.bcel.classfile.Method;
 
 import edu.umd.cs.findbugs.BugInstance;
 import edu.umd.cs.findbugs.BugReporter;
@@ -44,11 +47,18 @@ public class ExtendsConcreteTypeDetector implements Detector {
         }
         try {
             // Extending Object, an abstract type or Throwable are all permitted.
+            JavaClass superClass = obj.getSuperClass();
             if (OBJECT.equals(obj.getSuperclassName())
-                    || obj.getSuperClass().isAbstract()
-                    || obj.getSuperClass().isEnum()
+                    || superClass.isAbstract()
+                    || superClass.isEnum()
                     || isThrowable(obj)) {
                 return;
+            }
+            // Extending a type with a protected constructor is permitted.
+            for (Method method : superClass.getMethods()) {
+              if (isConstructor(method) && method.isProtected()) {
+                return;
+              }
             }
         } catch (ClassNotFoundException e) {
             // Ignore
@@ -61,6 +71,10 @@ public class ExtendsConcreteTypeDetector implements Detector {
 
     private static boolean isThrowable(JavaClass cls) throws ClassNotFoundException {
         return isSubtype(cls.getClassName(), THROWABLE);
+    }
+
+    private static boolean isConstructor(Method method) {
+        return method.getName().equals(CONSTRUCTOR_NAME);
     }
 
     @Override
