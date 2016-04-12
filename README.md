@@ -70,12 +70,13 @@ Now running `gradle check` will include the antipatterns checks.
 
 1. **Interface:** Rename Foo as FooImpl, and extract an interface called Foo. Consume/return the Foo interface rather than the concrete FooImpl type in Bar.baz.
 2. **Factory method:** Remove the final keyword from Foo, and instead declare the constructor private to prevent subclassing. Make a static factory method on Foo to allow instances to be constructed.
-3. **Pin your API:** Remove the final keyword from Foo, and guarantee not to make subclass-breaking changes in future.
+3. **Pin your API:** Remove the final keyword from Foo, and guarantee not to make subclass-breaking changes in future. [Effective Java] suggests that "one reasonable approach is to ensure that the class never invokes any of its overridable methods and to document this fact."
 4. **Trust your users:** Remove the final keyword from Foo, and trust your users not to make any fragile subclasses. Use the antipatterns plugin to enforce this contract within your own company. May be a bit optimistic for a big open-source project like Guava, but otherwise the cleanest option.
 
 [test doubles]: https://nirajrules.wordpress.com/2011/08/27/dummy-vs-stub-vs-spy-vs-fake-vs-mock/
 [Mockito's ReturnsSmartNulls]: http://site.mockito.org/mockito/docs/current/org/mockito/internal/stubbing/defaultanswers/ReturnsSmartNulls.html
 [Adapter pattern]: https://en.wikipedia.org/wiki/Adapter_pattern
+[Effective Java]: http://www.amazon.com/Effective-Java-Edition-Joshua-Bloch/dp/0321356683
 
 **Related detectors:** [DesignForExtension] requires public methods on non-final classes be abstract, final or empty; if you want to follow options 3 or 4, you will need to disable it. [FinalClass] requires that classes with private constructors be declared as final; if you want to follow option 2, you will need to disable it. Option 1 is compatible with both detectors.
 
