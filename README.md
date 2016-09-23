@@ -66,7 +66,7 @@ Now running `gradle check` will include the antipatterns checks.
 
 **Antipattern detected:** Accepting or returning a final type in a public method.
 
-**Motivation:** Untestable. Unit testing involves isolating the component being tested from the rest of the system by substituting the real implementation of its dependencies for [test doubles]. Final types subvert this by being impossible to substitute: the JVM itself prevents behaviour substitution. This is clearly overkill for most Java code, and disables really useful testing tools, such as [Mockito's ReturnsSmartNulls]. If you provide a library, exposing final types forces your users to use the [Adapter pattern] to hide your library behind a testable façade.
+**Motivation:** Untestable. Unit testing involves isolating the component being tested from the rest of the system by substituting the real implementation of its dependencies for [test doubles]. Final types subvert this by being impossible to substitute: the JVM itself prevents behaviour substitution. This is clearly overkill for most Java code, and disables really useful testing tools, such as [Mockito's smart nulls]. If you provide a library, exposing final types forces your users to use the [Adapter pattern] to hide your library behind a testable façade.
 
 **Suggested alternatives:** Instances of this antipattern should be refactored in one of the following ways (assuming type Bar has a method baz that consumes or returns type Foo):
 
@@ -76,7 +76,7 @@ Now running `gradle check` will include the antipatterns checks.
 4. **Trust your users:** Remove the final keyword from Foo, and trust your users not to make any fragile subclasses. Use the antipatterns plugin to enforce this contract within your own company. May be a bit optimistic for a big open-source project like Guava, but otherwise the cleanest option.
 
 [test doubles]: https://nirajrules.wordpress.com/2011/08/27/dummy-vs-stub-vs-spy-vs-fake-vs-mock/
-[Mockito's ReturnsSmartNulls]: http://site.mockito.org/mockito/docs/current/org/mockito/internal/stubbing/defaultanswers/ReturnsSmartNulls.html
+[Mockito's smart nulls]: http://site.mockito.org/mockito/docs/current/org/mockito/Mockito.html#RETURNS_SMART_NULLS
 [Adapter pattern]: https://en.wikipedia.org/wiki/Adapter_pattern
 [Effective Java]: http://www.amazon.com/Effective-Java-Edition-Joshua-Bloch/dp/0321356683
 
