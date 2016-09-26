@@ -2,7 +2,7 @@
 
 A FindBugs plugin for detecting misuse of inheritance and the final keyword in Java, inspired by [codingantihero]. Eliminate fragile subclassing and un-mockable APIs!
 
-> antipatterns legitimately uncovered a bunch of weird [ass extending](https://xkcd.com/37/) that was happening in Magritte -- [Dan Fox](https://github.com/iamdanfox)
+> antipatterns legitimately uncovered a bunch of weird [ass extending](https://xkcd.com/37/) that was happening -- [Dan Fox](https://github.com/iamdanfox)
 
 The plugin name, 'antipatterns', is aspirational: we hope to add more modern Java antipatterns in future, and would love to consider any suggestions in our [issue tracker].
 
