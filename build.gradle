@@ -16,9 +16,8 @@
 
 plugins {
   id 'com.github.johnrengelman.shadow' version '1.2.3'
-  id 'com.jfrog.artifactory' version '4.0.0'
+  id 'com.jfrog.artifactory' version '4.4.4'
   id 'com.jfrog.bintray' version '1.6'
-  id 'com.palantir.git-version' version '0.2.0'
 }
 
 repositories {
@@ -36,7 +35,7 @@ targetCompatibility = '1.7'
 apply from: "${rootDir}/gradle/publish.gradle"
 
 group 'com.palantir.antipatterns'
-version gitVersion()
+version = System.env.TRAVIS_TAG?.replaceAll('^v','')
 
 dependencies {
   compileOnly 'com.google.code.findbugs:findbugs:3.0.1'
@@ -87,4 +86,3 @@ integrationTestReport.dependsOn integrationTestClasses
 integrationTest.dependsOn integrationTestReport
 integrationTest.shouldRunAfter test
 check.dependsOn integrationTest
-
