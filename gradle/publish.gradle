@@ -22,46 +22,29 @@ tasks.build.dependsOn sourceJar, javadocJar
 
 publishing {
     publications {
-        bintray(MavenPublication) {
+        Antipatterns(MavenPublication) {
             from components.shadow
+            artifact(sourceJar)
+            artifact(javadocJar)
         }
     }
 }
-
-
-artifactory {
-    publish {
-        contextUrl = 'https://oss.jfrog.org/artifactory'
-        repository {
-            repoKey = (project.version =~ /-/ ? 'oss-snapshot-local' : 'oss-release-local')
-            username = System.env.BINTRAY_USER
-            password = System.env.BINTRAY_KEY
-            maven = true
-        }
-        defaults {
-            publications (publishing.publications.bintray)
-            properties = ['git': project.version]
-        }
-    }
-}
-artifactoryPublish.dependsOn 'generatePomFileForBintrayPublication', 'build'
 
 bintray {
     user = System.env.BINTRAY_USER
     key = System.env.BINTRAY_KEY
+    publications = ['Antipatterns']
     publish = true
     pkg {
         repo = 'releases'
         name = project.name
         userOrg = 'palantir'
         licenses = ['Apache-2.0']
-        publications = ['bintray']
+        vcsUrl = 'https://github.com/palantir/antipatterns.git'
     }
 }
 
 bintrayUpload.onlyIf {
-    System.env.BINTRAY_USER && System.env.BINTRAY_KEY
+    System.env.BINTRAY_USER && System.env.BINTRAY_KEY && (project.version != 'unspecified')
 }
-
-bintrayUpload.dependsOn 'generatePomFileForBintrayPublication', 'build'
 
