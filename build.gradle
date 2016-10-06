@@ -35,7 +35,7 @@ targetCompatibility = '1.7'
 apply from: "${rootDir}/gradle/publish.gradle"
 
 group 'com.palantir.antipatterns'
-version = System.env.TRAVIS_TAG?.replaceAll('^v','')
+version = System.env.CIRCLE_TAG?.replaceAll('^v','')
 
 dependencies {
   compileOnly 'com.google.code.findbugs:findbugs:3.0.1'
